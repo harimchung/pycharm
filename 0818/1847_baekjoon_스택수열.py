@@ -5,13 +5,14 @@ n = int(sys.stdin.readline())
 
 # 현재 top 값은 1이다.
 top = 1
-# 숫자가 1부터 n까지 들어있는 stack 을 생성한다.
-stack = [i for i in range(1,n+1)]
 
 # 빈 stack1을 생성한다. 여기에는 나중에 빠질 숫자가 담길 곳이다.
 stack1 = []
 # 답안을 담을 answer 리스트를 생성한다.
 answer = []
+
+# 방문했는지의 여부를 담을 list를 만든다.
+visited = [0] * (n+1)
 
 # 다음 줄부터 총 길이만큼 숫자를 입력받는다.
 for _ in range(n):
@@ -20,12 +21,12 @@ for _ in range(n):
     if i >= top:
         # 단, stack에 남아있는 숫자만 더한다
         for j in range(top, i+1):
-            if j in stack:
+            if visited[j] == 0:
                 # push(+)를 answer에 추가하고, 값을 빈 stack1에 추가한다.
                 answer.append('+')
                 stack1.append(j)
-                # 숫자가 담긴 stack 에서는 해당 숫자를 삭제한다.
-                stack.remove(j)
+                # visited에는 방문했다고 표시한다.
+                visited[j] = 1
         # pop(-)을 answer에 추가 하고, 값을 stack1에서 빼낸다.
         answer.append('-')
         stack1.pop()
